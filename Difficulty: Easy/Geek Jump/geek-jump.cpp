@@ -8,11 +8,10 @@ class Solution {
   public:
   int f(int n, vector<int> &height, vector<int> &dp) {
     if (n == 0) return 0;
+   
+    if(dp[n] != -1) return dp[n];
     
-    if (dp[n] != -1) return dp[n];
-
     int left = f(n - 1, height, dp) + abs(height[n] - height[n - 1]);
-    
     
     int right = INT_MAX;
 
