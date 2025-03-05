@@ -5,32 +5,35 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 // User function template for C++
 
 class Solution {
   private:
-    bool cc(vector<int> &arr, int target, int n, vector<vector<int>> &dp){
-        if (target == 0) return true;            // A sum of 0 is always possible with an empty subset
-        if (n < 0) return false;
-
+    bool cc(int ind, int target, vector<int> &arr, vector<vector<int>> &dp){
+        if(target == 0) return true;
+        if(ind == 0 ) return (arr[0] == target);
+        
+        if(dp[ind][target] != -1) return dp[ind][target];
+        
+        bool notpick = cc(ind - 1, target, arr, dp);
+        
         bool pick = false;
         
-        if(dp[n][target] != -1) return dp[n][target];
-        
-        if (arr[n] <= target){
-            pick = cc(arr, target - arr[n], n - 1,dp); 
+        if(arr[ind] <= target){
+            pick = cc(ind - 1, target - arr[ind], arr, dp);
         }
         
-        bool notpick = cc(arr, target, n - 1,dp);
-        return dp[n][target] = pick || notpick; 
+        return dp[ind][target] =  pick | notpick;   
     }
   public:
     bool isSubsetSum(vector<int>& arr, int target) {
-        int n = arr.size();
-        vector<vector<int>> dp(n, vector<int>(target + 1, -1)); 
-        return cc(arr, target, arr.size() - 1,dp);
+        // code here
+        vector<vector<int>> dp(arr.size(), vector<int> (target + 1, -1));
+        return cc(arr.size() - 1, target, arr, dp);
     }
 };
+
 
 //{ Driver Code Starts.
 
