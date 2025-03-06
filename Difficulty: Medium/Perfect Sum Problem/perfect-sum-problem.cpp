@@ -16,20 +16,22 @@ class Solution {
         
         if(dp[ind][target] != -1) return dp[ind][target];
         
-        int notpick = cc(ind - 1, arr, target,dp);
+        int notpick = cc(ind - 1, arr, target, dp);
         int pick = 0;
         
         if(arr[ind] <= target){
-            pick = cc(ind - 1, arr, target - arr[ind], dp);
+            pick = cc(ind - 1 ,arr, target - arr[ind], dp);
         }
         
         return dp[ind][target] = pick + notpick;
     }
   public:
     int perfectSum(vector<int>& arr, int target) {
-        vector<vector<int>> dp(arr.size(), vector<int> (target + 1, -1));
-        return cc(arr.size() - 1, arr, target , dp);
         // code here
+        int n = arr.size();
+        vector<vector<int>> dp(n,vector<int> (target + 1, -1));
+        
+        return cc(n - 1, arr, target, dp);
     }
 };
 
