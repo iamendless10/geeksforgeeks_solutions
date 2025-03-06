@@ -8,29 +8,38 @@ using namespace std;
 
 // User function template for C++
 
+
+// User function template for C++
+
 class Solution {
   private:
-    bool cc(int ind, int target, vector<int> &arr, vector<vector<int>> &dp){
+    bool cc(int ind, vector<int> &arr, int target, vector<vector<int>> &dp){
         if(target == 0) return true;
-        if(ind == 0 ) return (arr[0] == target);
+        
+        if(ind == 0){
+            return (arr[ind] == target);
+        }
+        
+        
         
         if(dp[ind][target] != -1) return dp[ind][target];
         
-        bool notpick = cc(ind - 1, target, arr, dp);
+        bool notpick = cc(ind - 1, arr, target, dp);
         
         bool pick = false;
         
         if(arr[ind] <= target){
-            pick = cc(ind - 1, target - arr[ind], arr, dp);
+            pick = cc(ind - 1, arr, target - arr[ind], dp);
         }
         
-        return dp[ind][target] =  pick | notpick;   
+        return dp[ind][target] = pick | notpick;
     }
   public:
     bool isSubsetSum(vector<int>& arr, int target) {
         // code here
-        vector<vector<int>> dp(arr.size(), vector<int> (target + 1, -1));
-        return cc(arr.size() - 1, target, arr, dp);
+        int n = arr.size();
+        vector<vector<int>> dp(n, vector<int> (target + 1, -1));
+        return cc(n - 1, arr, target, dp);
     }
 };
 
